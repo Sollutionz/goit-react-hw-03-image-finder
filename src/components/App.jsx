@@ -1,16 +1,20 @@
-export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
+import { Searchbar } from "./searchbar/Searchbar";
+import { Component, React } from "react";
+import axios from "axios";
+
+export class App extends Component {
+  state = {
+
+  }
+  onSubmit = e => {
+    e.preventDefault();
+    console.log(e);
+  }
+  render() {
+   return (
+    <>
+      <Searchbar onSubmit={this.onSubmit}/>
+    </>
   );
+ }
 };
