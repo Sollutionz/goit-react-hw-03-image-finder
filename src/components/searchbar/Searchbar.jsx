@@ -3,14 +3,14 @@ import React from "react"
 export const Searchbar = ({ onSubmit }) => {
     return (
       <>
-        <header className="searchbar">
-          <form className="form" onSubmit={onSubmit}>
-            <button type="submit" class="button">
-              <span className="button-label">Search</span>
+        <header className="Searchbar">
+          <form className="SearchForm" onSubmit={onSubmit}>
+            <button type="submit" className="SearchForm-button">
+              <span className="SearchForm-button-label">Search</span>
             </button>
 
             <input
-              className="input"
+              className="SearchForm-input"
               type="text"
               autoComplete="off"
               autoFocus
