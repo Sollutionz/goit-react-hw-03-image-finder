@@ -38,5 +38,5 @@ export class Modal extends Component {
 Modal.propTypes = {
   modalImages: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
-  closeModal: PropTypes.func.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };
