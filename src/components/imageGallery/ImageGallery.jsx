@@ -1,19 +1,18 @@
 import React from "react"
 import { ImageGalleryItem } from "components/imageGalleryItem/ImageGalleryItem"
+import PropTypes from 'prop-types';
 
 export const ImageGallery = ({
   data,
   openModal,
   getModalImg,
-  modalImages
 }) => {
   return (
     <ul className="ImageGallery">
       {data.map(item => (
         <ImageGalleryItem
           key={item.id}
-          img={item.img}
-          alt={item.alt}
+          image={item}
           openModal={openModal}
           getModalImg={getModalImg}
         />
@@ -22,3 +21,8 @@ export const ImageGallery = ({
   );
 };
 
+ImageGallery.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object.isRequired),
+  openModal: PropTypes.func.isRequired,
+  getModalImg: PropTypes.func.isRequired,
+};

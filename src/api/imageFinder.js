@@ -1,4 +1,3 @@
-import axios from "axios";
 import HTTPClient from "./config";
 import { API_KEY } from "./config";
 
@@ -24,7 +23,6 @@ export const fetchImages = async (query,page) => {
            modalImages: largeImageURL,
          })
        );
-       const totalImages = data.totalHits;
-       return { images, totalImages };
+       return { images };
      });
 }

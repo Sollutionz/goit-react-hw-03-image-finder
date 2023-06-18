@@ -1,4 +1,8 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
+
+
+
 export class Modal extends Component {
   componentDidMount() {
     document.addEventListener('keydown', this.escCloseModal);
@@ -17,16 +21,22 @@ export class Modal extends Component {
   };
 
   render() {
-    const modalImages = this.props;
+    const {modalImages,alt} = this.props;
 
     return (
       <>
         <div className="Overlay" onClick={this.closeModal}>
           <div className="ModalStyle">
-            <img src={modalImages} alt="smth" />
+            <img src={modalImages} alt={alt} />
           </div>
         </div>
       </>
     );
   }
 }
+
+Modal.propTypes = {
+  modalImages: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  closeModal: PropTypes.func.isRequired,
+};

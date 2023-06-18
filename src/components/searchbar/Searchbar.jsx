@@ -1,10 +1,30 @@
-import React from "react"
+import { Component } from "react"
+import PropTypes from 'prop-types';
 
-export const Searchbar = ({ onSubmit }) => {
+export class Searchbar extends Component {
+  state = {
+    query: '',
+  };
+
+  handleChange = (e) => {
+    this.setState({ query: e.target.value.toLowerCase() });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    if (this.state.query.trim() === '') {
+      return alert('Enter query,please');
+    }
+    this.props.onSubmit(this.state.query);
+  };
+
+  render() {
+    const { query } = this.state;
     return (
       <>
+        
         <header className="Searchbar">
-          <form className="SearchForm" onSubmit={onSubmit}>
+          <form className="SearchForm" onSubmit={this.handleSubmit}>
             <button type="submit" className="SearchForm-button">
               <span className="SearchForm-button-label">Search</span>
             </button>
@@ -15,9 +35,15 @@ export const Searchbar = ({ onSubmit }) => {
               autoComplete="off"
               autoFocus
               placeholder="Search images and photos"
+              onChange={this.handleChange}
+              value={query}
             />
           </form>
         </header>
       </>
     );
+  } 
 }
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

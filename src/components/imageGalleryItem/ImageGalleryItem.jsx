@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export const ImageGalleryItem = ({ img, alt, openModal, getModalImg }) => {
-  const modalImages = img.modalImages;
+export const ImageGalleryItem = ({ image, openModal, getModalImg }) => {
+   const { img, alt, modalImages } = image;
   return (
     <li className="ImageGalleryItem">
       <img
@@ -15,4 +16,10 @@ export const ImageGalleryItem = ({ img, alt, openModal, getModalImg }) => {
       />
     </li>
   );
+};
+
+ImageGalleryItem.propTypes = {
+  image: PropTypes.object.isRequired,
+  openModal: PropTypes.func.isRequired,
+  getModalImg: PropTypes.func.isRequired,
 };

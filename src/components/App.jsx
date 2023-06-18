@@ -10,57 +10,107 @@ export class App extends Component {
   state = {
     isLoading: false,
     query: '',
-    totalImages: 0,
     modalImages: null,
+    alt: '',
     data: [],
     page: 1,
     isModal: false,
   };
-  onSubmit = async e => {
-    e.preventDefault();
-    await this.setState({
-      query: e.target[1].value,
+
+  onSubmit = async query => {
+    await this.setState({ query, page: 1 });
+    this.setState({
       isLoading: true,
     });
     try {
       await fetchImages(this.state.query, this.state.page).then(
-        ({ images, totalImages }) => {
+        ({ images }) => {
           this.setState({
             data: images,
-            totalImages,
             modalImages: images.modalImages,
-            page: this.state.page + 1,
+            page: 1,
           });
         }
       );
     } catch (error) {
       alert(error.message);
     }
-    this.setState({ isLoading: false });
+    this.setState({
+      isLoading: false
+    });
   };
-
   onLoadMore = async () => {
+    await this.setState(prevState => ({ page: prevState.page + 1 }));
     this.setState({
       isLoading: true,
     });
     try {
       await fetchImages(this.state.query, this.state.page).then(
-        ({ images, totalImages }) => {
+        ({ images }) => {
           this.setState(prev => ({
             data: [...prev.data, ...images],
-            totalImages,
             modalImages: images.modalImages,
-            page: this.state.page + 1,
           }));
         }
       );
     } catch (error) {
-      console.log(error.message);
+      alert(error.message);
     }
     this.setState({
       isLoading: false,
     });
   };
+
+  // *** получился инфинитлуп ((((***
+
+  // componentDidUpdate(prevState) {
+  //   const query = this.state;
+  //   if (prevState.query !== query) {
+  //     this.setState({
+  //       isLoading: true,
+  //     });
+  //     fetchImages(this.state.query, this.state.page)
+  //       .then(({ images }) => {
+  //         this.setState({
+  //           data: images,
+  //           modalImages: images.modalImages,
+  //           page: 1,
+  //         });
+  //       })
+
+  //       .catch(error => {
+  //         alert(error.message);
+  //       })
+
+  //       .finally(() => {
+  //         this.setState({ isLoading: false });
+  //       });
+  //   }
+
+  //   if (prevState.page < this.state.page) {
+  //     this.setState({
+  //       isLoading: true,
+  //     });
+
+  //     fetchImages(this.state.query, this.state.page)
+  //       .then(({ images }) => {
+  //         this.setState(prev => ({
+  //           data: [...prev.data, ...images],
+  //           modalImages: images.modalImages,
+  //           page: this.state.page,
+  //         }));
+  //       })
+
+  //       .catch(error => {
+  //         alert(error.message);
+  //       })
+  //       .finaly(() => {
+  //         this.setState({
+  //           isLoading: false,
+  //         });
+  //       });
+  //   }
+  // }
 
   toggleModal = () => {
     this.setState(prevState => ({ isModal: !prevState.isModal }));
@@ -71,7 +121,7 @@ export class App extends Component {
   };
 
   render() {
-    const { data, loading, modalImages, isModal, totalImages } = this.state;
+    const { data, loading, modalImages, alt, isModal } = this.state;
 
     return (
       <>
@@ -85,7 +135,11 @@ export class App extends Component {
             getModalImg={this.getModalImg}
           />
           {isModal && (
-            <Modal modalImages={modalImages} toggleModal={this.toggleModal} />
+            <Modal
+              modalImages={modalImages}
+              alt={alt}
+              toggleModal={this.toggleModal}
+            />
           )}
           {data.length !== 0 && <Button onLoadMore={this.onLoadMore} />}
         </div>
