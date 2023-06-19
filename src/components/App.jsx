@@ -141,7 +141,7 @@ export class App extends Component {
               toggleModal={this.toggleModal}
             />
           )}
-          {data.length !== 0 && <Button onLoadMore={this.onLoadMore} />}
+          {data.length > 11 && <Button onLoadMore={this.onLoadMore} />}
         </div>
       </>
     );
